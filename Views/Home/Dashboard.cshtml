@@ -1,0 +1,55 @@
+@using BankAccount.Models
+@model Transaction
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <header>
+            <h1>Bank Account</h1>
+    </header>
+    <div id="container">
+
+    <div>
+        <h2>Welcome, @ViewBag.User.FirstName</h2>
+        <h2>Current Balance: $@ViewBag.User.balance</h2>
+    </div>
+    <section class="card">
+        <form asp-action="NewTransaction" method="POST" asp-controller="Home">
+            <div>
+                <h3><label asp-for="Amount">New Transaction</label></h3><br>
+                <input type="number" asp-for="Amount" step=".01">
+            </div>
+            <input type="submit">
+        </form>
+    <div>
+        <table>
+            <tr>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+            @foreach (Transaction transaction in ViewBag.Transactions)
+            {
+                <tr>
+                    @{
+                        if(transaction.Amount < 0)
+                        {
+                            <td>$@transaction.Amount</td>
+                        }
+                        else{
+                            <td>$@transaction.Amount</td>
+                        }
+                    }
+                    <td>@transaction.CreatedAt</td>
+                </tr>
+            }
+        </table>
+    </div>
+    </section>
+    </div>
+</body>
+</html>
